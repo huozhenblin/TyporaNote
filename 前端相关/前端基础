@@ -1,0 +1,295 @@
+# 变量作用域
+
+### let/var
+
+let定义变量，可以在代码块中使用，具有块定义域
+
+```javascript
+例如函数后面跟的 if for等之类的用来限制范围的语法
+{
+	块里的代码，像var的作用域范围大不安全
+}
+```
+
+### const
+
+- 主要作用时将某个变量修饰为常量，不可以再次赋值
+- const定义修饰符，必须赋值
+- 常量的含义是指向的对象不能修改，但可以改变对象内部的属性，因为他保存的是对象得内存地址
+
+# 对象的增强写法
+
+```javascript
+ // // 对象的写法
+        // const obj=new object()
+        // //增强写法
+        // const obj1={
+        //     name:'sss',
+        //     age:22,
+        //     run:function(){
+        //         console.log('zaixie dongxi')
+        //     }
+        // }
+        // 属性的增强写法
+
+        const nam='hh'
+        const age=11
+        const height=222
+//es5的写法
+        cons       //es5
+        const object1={
+            name: nam,
+            age: age,
+            height: height
+
+        }
+        console.log(object1)
+        //es6写法
+         const object={
+            nam,
+            age,
+            height
+
+        }
+        console.log(object)
+        // 函数的增强写法
+        //es5
+        const obje={
+            run: function(){
+
+            }
+        }
+        //es6增强
+        const obje={
+            run(){
+
+            }
+        }
+    </script>
+```
+
+# 函数传参
+
+```
+function(...num){}
+//调用时可以传递人任意多的参数
+```
+
+# 数组的splice方法
+
+### 能插入元素
+
+.splice(1,0,x,x,x,) 第二个位置为零 表插入，后面为要插入的值
+
+### 替换元素
+
+  	.splice(1,5,x,x,x,)一表从第几个开始 二参表替换几个，后面跟上需要替换的元素
+
+### 删除操作
+
+​	第二个参数为准备删除几个元素.splice(1,1)一表从第几个开始 二参表删几个-两个参数表删
+
+# 三个循环遍历的方式
+
+## 	for(n of/in list)
+
+```javascript
+//取出小于一百的数字
+// let number1=[]
+// let number2=[]
+// //这个n取得是索引值
+const number=[1,2,46,6,788,99];
+ for(let n in number){
+   console.log(n)
+    if(n<100){
+       number1.push(n)
+     }
+ }
+// // 这个n取得是对象
+for(let n of number){
+     if(n<100){
+      number2.push(n*2)
+    }
+ }
+```
+
+# 高阶函数
+
+## 	filter的使用
+
+- 这个会根据函数参数返回的Boolean值来确定filter是否返回这个遍历的值
+
+- 他会遍历数组中的每一个值，每次遍历会把当时的值传给内部函数参数
+
+- 当返回值为真，函数内部会自动将这次的回调n加入新的数组
+
+- 当返回值为假，函数内部会自动过滤掉这次的n
+
+  ```javascript
+  let number3 = number.filter(function(n){
+    return n>100
+  })
+  ```
+
+  ## map的使用
+
+  // map的使用，内部函数会返回一个值并赋值给数组
+
+  ```javascript
+  // map的使用，内部函数会返回一个值并赋值给数组
+  let number4 = number.map(function(n){
+    return 1000
+  })
+  ```
+
+  ## reduce
+
+reduce函数会对数组中所有的内容进行汇总
+
+书记有几个值调用几次
+
+传入两个参数其中一个为函数，这个函数包含两个参数preValue：，n，第二个为初始化参数初始化preValue
+
+preValue每次嗲接受上次的返回值，n是每个数组值织每次调用时勇于接受这个值得
+
+```
+let number_reduce = number.reduce(function(preValue,n){
+  return preValue+n
+},0)
+
+console.log(number_reduce) //返回和 942
+```
+
+![image-20200305123639191](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200305123639191.png)
+
+# es6的promis语法
+
+## 1.概念：
+
+- ES6中一个非常重要和好用的特性就是Promise
+  - 但是初次接触Promise会一脸懵逼，这TM是什么东西？
+  - 看看官方或者一些文章对它的介绍和用法，也是一头雾水。
+
+- Promise到底是做什么的呢？
+  - Promise是异步编程的一种解决方案。
+
+- 那什么时候我们会来处理异步事件呢？
+  - 一种很常见的场景应该就是网络请求了。
+  - 我们封装一个网络请求的函数，因为不能立即拿到结果，所以不能像简单的3+4=7一样将结果返回。
+  - 所以往往我们会传入另外一个函数，在数据请求成功时，将数据通过传入的函数回调出去。
+  - 如果只是一个简单的网络请求，那么这种方案不会给我们带来很大的麻烦。
+
+但是，当网络请求非常复杂时，就会出现回调地狱。
+
+## 2.语法
+
+​	方法一
+
+```js
+<script>
+    // 创建 promise 实例
+    new Promise((resolve,reject) => {
+      // 异步操作获取数据data
+      setTimeout(() => {
+        //  resolve('hello world')//调用这个函数才会调用then函数
+        // 失败后执行reject函数  这个执行后会调用catch方法
+        reject('hello err')
+      }, 1000);
+     
+    }).then((data)=>{  //这个函数会调用其函数参数 
+      // 对data进行处理
+      console.log(data)//成功处理
+    }).catch(err=>{//失败处理
+      console.log(err)
+    })
+  </script>
+```
+
+方法二
+
+```js
+<script>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // resolve('hello world')
+        reject('error messages')
+      }, 100);
+//then的回调函数可以写两个
+    }).then(date => {
+      console.log(date)
+    }, data => {
+      console.log(data)
+    })
+  </script>
+```
+
+## 3.**Promise****三种状态**
+
+![image-20200325101347912](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200325101347912.png)
+
+- pending：等待状态，比如正在进行网络请求，或者定时器没有到时间。
+
+- fulfill：满足状态，当我们主动回调了resolve时，就处于该状态，并且会回调.then()
+
+- reject：拒绝状态，当我们主动回调了reject时，就处于该状态，并且会回调.catch()
+
+## 4.链式调用
+
+这里我们直接通过Promise包装了一下新的数据，将Promise对象返回了
+
+Promise.resovle()：将数据包装成Promise对象，并且在内部回调resolve()函数
+
+Promise.reject()：将数据包装成Promise对象，并且在内部回调reject()函数![image-20200325101614010](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200325101614010.png)
+
+### **链式调用简写**
+
+![image-20200325101941777](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200325101941777.png)
+
+### 静态方法
+
+#### .all()
+
+Promise.all 方法接受一个数组作参数，数组中的对象（p1、p2、p3）均为promise实例（如果不是一个promise，该项会被用 Promise.resolve 转换为一个promise)。它的状态由这三个promise实例决定
+
+#### .race()
+
+Promise.race 方法同样接受一个数组作参数。当p1, p2, p3中有一个实例的状态发生改变（变为 fulfilled或 rejected ），p的状态就跟着改变。并把第一个改变状态的promise的返回值，传给p的回调函数
+
+```js
+<script>
+    // Promise常用API-对象方法
+    // */
+    // // console.dir(Promise)
+    function queryData(url) {
+      return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState != 4) return;
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            // 处理正常的情况
+            resolve(xhr.responseText);
+          } else {
+            // 处理异常情况
+            reject('服务器错误');
+          }
+        };
+        xhr.open('get', url);
+        xhr.send(null);
+      });
+    }
+
+    var p1 = queryData('http://localhost:3000/a1');
+    var p2 = queryData('http://localhost:3000/a2');
+    var p3 = queryData('http://localhost:3000/a3');
+    Promise.all([p1, p2, p3]).then(function (result) {
+      // all 中的参数 [p1,p2,p3] 和 返回的结果一 一对应["HELLO TOM", "HELLO JERRY","HELLO SPIKE"]
+      console.log(result)
+      //["HELLO TOM", "HELLO JERRY", "HELLO SPIKE"]
+    })
+    Promise.race([p1, p2, p3]).then(function (result) {
+      // 由于p1执行较快，Promise的then()将获得结果'P1'。p2,p3仍在继续执行，但执行结果将被丢弃。
+      console.log(result) // "HELLO TOM"
+    })
+  </script>
+```
+
