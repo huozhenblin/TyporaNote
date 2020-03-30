@@ -161,3 +161,63 @@ The key's randomart image is:
 
 在命令窗口上输入 ssh -T ssh -T [git@github.com](mailto:git@github.com) 按回车键，如看到以下信息，那么就完美了。
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190619221201430.png)
+
+# 分支创建与合并
+
+## 1.分支使用
+
+### 步骤：
+
+- 创建分支 git branch  分支名字
+- 切换到该分支 git  checkout  分支名字
+- 将本地分支推送到远程，即远程创建分支 git push origin [branch name]
+- 在该分支内进行工作
+- add 分支内的文件 然后 commit 
+- push到远程分支
+- 稳定后融合时，在工作区内切回到主分支
+- 尽情融合命令，然后提交 再push到远程主分支
+
+## 2.分支相关命令
+
+创建切换分支命令：
+
+```powershell
+$ git branch dev  //创建分支
+$ git checkout dev  //切换分支
+//创建和切换统一
+$ git checkout -b [branch name]
+
+```
+
+将分支推送到github
+
+```shell
+git push origin [branch name]
+```
+
+
+
+查看本地分支：带星号的为当前工作目录
+
+```shell
+$ git branch
+* dev
+  master
+$ git branch -r //查看远程分支
+$ git branch -a  //查看所有分支，包括本地和远程
+```
+
+
+
+融合分支：将分支融合到另一个支（融合时，工作区要在目的分支即另一个分支）
+
+```shell
+$ git merge dev
+```
+
+删除分支
+
+```shell
+$ git branch -d [branch name]  
+git push origin :[branch name]  //删除github远程分支
+```
