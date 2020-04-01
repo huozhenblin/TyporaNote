@@ -221,3 +221,23 @@ $ git merge dev
 $ git branch -d [branch name]  
 git push origin :[branch name]  //删除github远程分支
 ```
+
+# idea中忽略不想提交的文件
+
+在.gitignore中进行设置相关文件
+
+```
+下面是一些.gitignore文件忽略的匹配规则：
+
+*.a       # 忽略所有 .a 结尾的文件
+!lib.a    # 但 lib.a 除外
+/TODO     # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
+build/    # 忽略 build/ 目录下的所有文件
+doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+```
+
+但是只对未跟踪文件有效，使用命令取消追踪
+
+使用git rm --cached 文件名ming命令
+
+即在commit时不用再担心忘记取消勾选不想上传git的文件了

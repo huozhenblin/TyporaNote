@@ -266,13 +266,15 @@ tmpfs                      99580       0    99580    0% /run/user/0
 
 语法： more【文件名】
 
-​			进入more命令行
+​			进入more命令行 
 
 ​			空格或者f    翻页
 
 ​				（enter） 换行
 
 ​				q或Q        退出
+
+
 
 功能描述：分页显示文件内容
 
@@ -438,7 +440,69 @@ chown shenchao jan.index
 
 可以更改umask +对应数字
 
+### 1.3 文件搜索命令
+
+#### find
+
+语法：find 【搜索范围】【匹配条件】
+
+功能：文件搜索
+
+	$ find /etc -name init
+在目录/etc中查找文件init
+-iname 不区分大小写
+$ find / -size +204800
+在根目录下查找大于100MB的文件
++n 大于 -n 小于 n 等于
+$ find /home -user shenchao
+在根目录下查找所有者为shenchao的文件
+-group 根据所属组查找  
+
+$ find /etc -cmin -5
+在/etc下查找5分钟内被修改过属性的文件和
+目录
+-amin 访问时间 access
+-cmin 文件属性 change
+-mmin 文件内容 modify  
+
+
+
+$ find /etc -size +163840 -a -size -204800
+在/etc下查找大于80MB小于100MB的文件
+-a 两个条件同时满足
+-o 两个条件满足任意一个即可
+$ find /etc -name inittab -exec ls -l {} \;
+在/etc下查找inittab文件并显示其详细信息
+-exec/-ok 命令 {} \; 对搜索结果执行操作  
+
+-type 根据文件类型查找
+f 文件 d 目录 l 软链接文件
+-inum 根据i节点查找  
+
 ## 1.4.帮助命令
+
+### man
+
+命令名称： man
+命令英文原意： manual
+命令所在路径： /usr/bin/man
+执行权限：所有用户
+语法： man [命令或配置文件]
+功能描述：获得帮助信息
+范例： $ man ls
+查看ls命令的帮助信息
+$ man services
+查看配置文件services的帮助信息  
+
+### help  
+
+命令名称： help
+命令所在路径： Shell内置命令
+执行权限：所有用户
+语法： help 命令
+功能描述：获得Shell内置命令的帮助信息
+范例： $ help umask
+查看umask命令的帮助信息  
 
 ## 1.5.用户管理命令
 

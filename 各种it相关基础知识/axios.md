@@ -23,7 +23,7 @@ axios.patch(url[, data[, config]])
 ```js
 axios.defaults.baseURL = ‘123.207.32.32:8000’
 axios.defaults.headers.post[‘Content-Type’] = ‘application/x-www-form-urlencoded’;
-
+axios.defaults.属性选项
 ```
 
 # **常见的配置选项**
@@ -45,3 +45,14 @@ axios.defaults.headers.post[‘Content-Type’] = ‘application/x-www-form-urle
 这个时候, 我们就可以创建新的实例, 并且传入属于该实例的配置信息.
 
 ![image-20200326161649916](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200326161649916.png)![image-20200326161710312](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200326161710312.png)
+
+# **发送并发请求**
+
+n有时候, 我们可能需求同时发送两个请求
+
+p使用axios.all, 可以放入多个请求的数组.
+
+paxios.all([]) 返回的结果是一个数组，使用 axios.spread 可将数组 [res1,res2] 展开为 res1, res2
+
+![image-20200401150954573](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200401150954573.png)
+
