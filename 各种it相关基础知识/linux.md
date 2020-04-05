@@ -506,8 +506,194 @@ $ man services
 
 ## 1.5.用户管理命令
 
+### w 
+
+这个命令可以查看当前在线的用户
+
 ## 1.6.压缩解压命令
 
 ## 1.7.网络命令
 
+### write  
+
+指令名称： write
+指令所在路径： /usr/bin/write
+执行权限：所有用户
+语法： write <用户名>  信息
+功能描述：给用户发信息，以Ctrl+D保存结束
+范例： # write linzhiling  
+
+### wall  
+
+指令名称： wall
+命令英文原意： write all
+指令所在路径： /usr/bin/wall
+执行权限：所有用户
+语法： wall [message]
+功能描述：发广播信息
+范例： # wall ShenChao is a honest man!  
+
+### ping  
+
+命令名称： ping
+命令所在路径： /bin/ping
+执行权限：所有用户
+语法： ping 选项 IP地址
+-c 指定发送次数
+功能描述：测试网络连通性
+范例： # ping 192.168.1.156  
+
+平的过程中 clt+c 退出
+
+### ifconfig  
+
+命令名称： ifconfig
+命令英文原意： interface configure
+命令所在路径： /sbin/ifconfig
+执行权限： root
+语法： ifconfig 网卡名称 IP地址
+功能描述：查看和设置网卡信息
+范例： # ifconfig eth0 192.168.8.250  
+
+### mail  
+
+命令名称： mail
+命令所在路径： /bin/mail
+执行权限：所有用户
+语法： mail [用户名]
+功能描述：查看发送电子邮件
+范例： # mail root  
+
+### last  
+
+命令名称： last
+命令所在路径： /usr/bin/last
+执行权限：所有用户
+语法： last
+功能描述：列出目前与过去登入系统的用户信息
+范例： # last  
+
+### lastlog  
+
+命令名称： lastlog
+命令所在路径： /usr/bin/lastlog
+执行权限：所有用户
+语法： lastlog
+功能描述：检查某特定用户上次登录的时间
+范例： # lastlog
+\# lastlog -u 502  
+
+### traceroute  显示数据包到主机间的路径
+
+命令名称： traceroute
+命令所在路径： /bin/traceroute
+执行权限：所有用户
+语法： traceroute
+功能描述：显示数据包到主机间的路径
+范例： # traceroute www.lampbrother.net
+
+
+
+### netstat  显示网络相关信息
+
+命令名称： netstat
+命令所在路径： /bin/netstat
+执行权限：所有用户
+语法： netstat [选项]
+功能描述：显示网络相关信息
+
+  ![image-20200405213400179](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405213400179.png)
+
+### setup  配置网络
+
+命令名称： setup
+命令所在路径： /usr/bin/setup
+执行权限： root
+语法： setup
+功能描述：配置网络
+范例： # setup  
+
+### 挂载命令  
+
+命令名称： mount
+命令位置： /bin/mount
+执行权限：所有用户
+命令语法： mount [-t 文件系统] 设备文件名 挂载点    固定 iso9660 /dev/sr0
+范例： # mount -t iso9660 /dev/sr0 /mnt/cdrom  
+
+### 网络重启
+
+service network restart
+
 ## 1.8.关机重启命令
+
+### shutdown命令  
+
+[root@localhost ~]# shutdown [选项] 时间
+选项：
+-c： 取消前一个关机命令
+-h： 关机
+-r： 重启  
+
+### 2、其他关机命令
+
+[root@localhost ~]# halt
+[root@localhost ~]# poweroff
+[root@localhost ~]# init 0  
+
+### 3、其他重启命令  
+
+[root@localhost ~]# reboot
+[root@localhost ~]# init 6  
+
+![image-20200405220101690](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405220101690.png)
+
+[root@localhost ~]# cat /etc/inittab
+\#修改系统默认运行级别
+id:3:initdefault:
+[root@localhost ~]# runlevel
+\#查询系统运行级别  
+
+### 5、退出登录命令  
+
+[root@localhost ~]# logout  
+
+## VIM命令
+
+### Vim工作模式
+
+![image-20200405220932778](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405220932778.png)在命令模式下 :命令 
+
+:SET NUM she zhi hanghao
+
+### 命令模式命令
+
+![image-20200405233438874](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405233438874.png)
+
+插入命令是在命令模式下 使用的
+
+### 定位命令  
+
+![image-20200405233824820](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405233824820.png)
+
+### 删除命令  
+
+n1 n2为行号
+
+![image-20200405233920674](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405233920674.png)
+
+### 复制和剪切命令  
+
+![image-20200405234223586](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405234223586.png)
+
+### 替换和取消命令  
+
+![image-20200405234242961](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405234242961.png)
+
+### 搜索和搜索替换命令  
+
+![image-20200405234430276](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405234430276.png)
+
+### 保存和退出命令  
+
+![image-20200405234544979](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200405234544979.png)
