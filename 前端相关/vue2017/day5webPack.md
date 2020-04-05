@@ -376,7 +376,7 @@ output: { // 配置输出选项
 npm install vue --save
 ```
 
-然后就可以在js文件向使用导入命令导入vue.js，然后开始书写蹙额相关的代码
+然后就可以在js文件向使用导入命令导入vue.js，然后开始书写相关的代码
 
 ```javascript
 import Vue from 'vue'

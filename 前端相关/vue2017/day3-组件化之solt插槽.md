@@ -100,10 +100,24 @@
 
 - 非常简单，只要给slot元素一个name属性即可
 - <slot name='myslot'></slot>
+
+《--这个废弃
+
 - 父组件使用时在替换的标签上添加slot属性如例<span slot="left">左边的插槽</span>
 - <span slot="left">左边的插槽</span>
 
-我们来给出一个案例：
+--》
+
+- 最新的用法是，我们可以在一个 ` 元素上使用 `v-slot` 指令，并以 `v-slot` 的参数的形式提供其名称：
+- 现在 ` 元素中的所有内容都将会被传入相应的插槽。任何没有被包裹在带有 `v-slot` 的 ` 中的内容都会被视为默认插槽的内容。
+
+### 注意：
+
+-  **`v-slot` 只能添加在<template>上** (只有[一种例外情况](https://cn.vuejs.org/v2/guide/components-slots.html#独占默认插槽的缩写语法))，这一点和已经废弃的 [`slot` attribute](https://cn.vuejs.org/v2/guide/components-slots.html#废弃了的语法) 不同。
+
+- 一个不带 `name` 的 `` 出口会带有隐含的名字“default”。
+
+### 我们来给出一个案例：
 
 这里我们先不对导航组件做非常复杂的封装，先了解具名插槽的用法。
 
@@ -112,22 +126,33 @@
 
 <div id="app">
   <cpn>
-    <span slot="left">左边的插槽</span>
-    <button slot="left">左边还可以加个按钮</button>
-    <button slot="center">中间加个按钮</button>
-    <a href="http://www.baidu.com" slot="right">👉加个百度链接</a>
+    <template v-slot:header>
+    <h1>Here might be a page title</h1>
+  </template>
+
+  <p>A paragraph for the main content.</p>
+  <p>And another one.</p>
+
+  <template v-slot:footer>
+    <p>Here's some contact info</p>
+  </template>
   </cpn>
   <cpn></cpn>
 </div>
 
 
 <template id="cpn">
-  <div>
-    <slot></slot>
-    <slot name="left"><span>左边</span></slot>
-    <slot name="center"><span>中间</span></slot>
-    <slot name="right"><span>右边</span></slot>
-  </div>
+ <div class="container">
+  <header>
+    <!-- 我们希望把页头放这里 -->
+  </header>
+  <main>
+    <!-- 我们希望把主要内容放这里 -->
+  </main>
+  <footer>
+    <!-- 我们希望把页脚放这里 -->
+  </footer>
+</div>
 </template>
 
 <script src="../js/vue.js"></script>
@@ -148,6 +173,60 @@
 </body>
 ```
 
-## **4.编译作用域**
+上面的在最新版
+
+## 4.[作用域插槽](https://cn.vuejs.org/v2/guide/components-slots.html#作用域插槽)
+
+### 作用
+
+让插槽内容能够访问子组件中才有的数据是很有用的
+
+### 用法
+
+例如，设想一个带有如下模板的 `<current-user/>` 组件：
+
+```
+<span>
+  <slot>{{ user.lastName }}</slot>
+</span>
+```
+
+我们可能想换掉备用内容，用名而非姓来显示。如下：
+
+```
+<current-user>
+  {{ user.firstName }}
+</current-user>
+```
+
+然而上述代码不会正常工作，因为只有 <current-user/> 组件可以访问到 `user` 而我们提供的内容是在父级渲染的。
+
+为了让 `user` 在父级的插槽内容中可用，我们可以将 `user` 作为 <slot> 元素的一个 attribute 绑定上去：
+
+```
+<span>
+  <slot v-bind:user="user">
+    {{ user.lastName }}
+  </slot>
+</span>
+```
+
+绑定在 ``<slot> 元素上的 attribute 被称为**插槽 prop**。现在在父级作用域中，我们可以使用带值的 `v-slot` 来定义我们提供的插槽 prop 的名字：
+
+```
+<current-user>
+  <template v-slot:default="slotProps">
+    {{ slotProps.user.firstName }}
+  </template>
+</current-user>
+```
+
+<template v-slot:default="slotProps"> v-slot: 后面是插槽名=“自定义名”
+
+在这个例子中，我们选择将包含所有插槽 prop 的对象命名为 `slotProps`，但你也可以使用任意你喜欢的名字。
+
+
+
+### **注**
 
 **父组件模板的所有东西都会在父级作用域内编译；子组件模板的所有东西都会在子级作用域内编译。**
