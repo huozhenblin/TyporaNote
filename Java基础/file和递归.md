@@ -327,7 +327,7 @@ public class DiGuiDemo {
 
 ### 代码执行图解
 
-![](D:/BaiduNetdiskDownload/19.【File类、递归】-笔记/就业班-day08-File类、递归/img/day08_01_递归累和.jpg)
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\day08_01_递归累和.jpg)
 
 > 小贴士：递归一定要有条件限定，保证递归能够停止下来，次数不要太多，否则会发生栈内存溢出。
 

@@ -23,11 +23,11 @@
 
 - **C/S结构** ：全称为Client/Server结构，是指客户端和服务器结构。常见程序有ＱＱ、迅雷等软件。
 
-![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/1_cs.jpg)
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\1_cs.jpg)
 
 **B/S结构** ：全称为Browser/Server结构，是指浏览器和服务器结构。常见浏览器有谷歌、火狐等。
 
-![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/2_bs.jpg)
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\2_bs.jpg)
 
 两种架构各有优势，但是无论哪种架构，都离不开网络的支持。**网络编程**，就是在一定的协议下，实现两台计算机的通信的程序。
 
@@ -38,7 +38,7 @@
 
 * **TCP/IP协议：** 传输控制协议/因特网互联协议( Transmission Control Protocol/Internet Protocol)，是Internet最基本、最广泛的协议。它定义了计算机如何连入因特网，以及数据如何在它们之间传输的标准。它的内部包含一系列的用于处理数据通信的协议，并采用了4层的分层模型，每一层都呼叫它的下一层所提供的协议来完成自己的需求。
 
-![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/3_tcp_ip.jpg)
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\3_tcp_ip.jpg)
 
 上图中，TCP/IP协议中的四层分别是应用层、传输层、网络层和链路层，每层分别负责不同的通信功能。
 链路层：链路层是用于定义物理传输通道，通常是对某些网络连接设备的驱动协议，例如针对光纤、网线提供的驱动。
@@ -58,7 +58,7 @@
 
   但是在使用UDP协议传送数据时，由于UDP的面向无连接性，不能保证数据的完整性，因此在传输重要数据时不建议使用UDP协议。UDP的交换过程如下图所示。
 
-![UDP通信图解](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/UDP通信图解.bmp)
+![UDP通信图解](D:\my\study\TyporaNote\工具的学习文档\imgs\UDP通信图解.bmp)
 
 特点:数据被限制在64kb以内，超出这个范围就不能发送了。
 
@@ -73,7 +73,7 @@
     - 第二次握手，服务器端向客户端回送一个响应，通知客户端收到了连接请求。
     - 第三次握手，客户端再次向服务器端发送确认信息，确认连接。整个交互过程如下图所示。
 
-![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/4_tcp.jpg)
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\4_tcp.jpg)
 
 ​    完成三次握手，连接建立后，客户端和服务器就可以开始进行数据传输了。由于这种面向连接的特性，TCP协议可以保证传输数据的安全，所以应用十分广泛，例如下载文件、浏览网页等。
 
@@ -208,7 +208,7 @@ ServerSocket server = new ServerSocket(6666);
 
 > 到此，客户端向服务端发送数据成功。
 
-![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/5_简单通信.jpg)
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\5_简单通信.jpg)
 
 > 自此，服务端向客户端回写数据。
 
@@ -337,7 +337,7 @@ public class ClientTCP {
 3. 【服务端】输入流，读取文件数据到服务端程序。
 4. 【服务端】输出流，写出文件数据到服务器硬盘中。
 
-![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/6_upload.jpg)    
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\6_upload.jpg)    
 
 #### 基本实现
 
@@ -489,7 +489,7 @@ public class FileUpload_Server {
 5. 【服务端】获取输出流，回写数据。
 6. 【客户端】获取输入流，解析回写数据。
 
-![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/6_upload2.jpg)
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\6_upload2.jpg)
 
 #### 回写实现
 
@@ -590,7 +590,7 @@ public class FileUpload_Client {
 
    复制到我们Module中，比如复制到day08中
 
-   ![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/复制.png)
+   ![](D:\my\study\TyporaNote\工具的学习文档\imgs\复制.png)
 
 2. 我们模拟服务器端，ServerSocket类监听端口，使用浏览器访问
 
@@ -607,7 +607,7 @@ public class FileUpload_Client {
    }
    ~~~
 
-   ![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/无法访问.jpg)
+   ![](D:\my\study\TyporaNote\工具的学习文档\imgs\无法访问.jpg)
 
 3. 服务器程序中字节输入流可以读取到浏览器发来的请求信息
 
@@ -674,7 +674,7 @@ public class SerDemo {
 
 * **火狐**
 
-![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/效果图1.png)
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\效果图1.png)
 
 > 小贴士：不同的浏览器，内核不一样，解析效果有可能不一样。
 
@@ -737,6 +737,4 @@ public class ServerDemo {
 
 **访问效果：**
 
-![](D:/BaiduNetdiskDownload/09.会员版(2.0)-就业课(2.0)-网络编程/22.【网络编程】-笔记/就业班-day11-网络编程/img/效果图2.png)图解：
-
-![](img\BS通信.bmp)
+![](D:\my\study\TyporaNote\工具的学习文档\imgs\效果图2.png)
