@@ -1,14 +1,5 @@
 # SpringBoot集成JWT实现token验证
 
-[![img](https://upload.jianshu.io/users/upload_avatars/4630295/2582c104-c45e-4b14-8791-27f69f278a01.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp)](https://www.jianshu.com/u/f192766abeab)
-
-[意识流丶](https://www.jianshu.com/u/f192766abeab)关注
-
-92018.07.10 22:39:42字数 2,647阅读 94,321
-
-**JWT官网： [https://jwt.io/](https://links.jianshu.com/go?to=https%3A%2F%2Fjwt.io%2F)**
-**JWT(Java版)的github地址:[https://github.com/jwtk/jjwt](https://links.jianshu.com/go?to=https%3A%2F%2Fgithub.com%2Fjwtk%2Fjjwt)**
-
 ### 什么是JWT
 
 **Json web token (JWT)**, 是为了在网络应用环境间传递声明而执行的一种基于`JSON`的开放标准（(RFC 7519).**定义了一种简洁的，自包含的方法用于通信双方之间以`JSON`对象的形式安全的传递信息。**因为数字签名的存在，这些信息是可信的，**JWT可以使用`HMAC`算法或者是`RSA`的公私秘钥对进行签名。**
@@ -181,7 +172,7 @@ public class User {
 
 
 
-```tsx
+```java
 public String getToken(User user) {
         String token="";
         token= JWT.create().withAudience(user.getId())

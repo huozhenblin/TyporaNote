@@ -2504,21 +2504,7 @@ public class BasicErrorController extends AbstractErrorController {
 
 
 
-​	4、DefaultErrorViewResolver：      bb
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+​	4、DefaultErrorViewResolver：      
 
 @Override
 	public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status,

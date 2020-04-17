@@ -170,7 +170,9 @@ public class MapDemo02 {
 
 ![](D:\my\study\TyporaNote\工具的学习文档\imgs\Map集合遍历方式二.bmp)
 
-> tips：Map集合不能直接使用迭代器或者foreach进行遍历。但是转成Set之后就可以使用了。
+### 注：
+
+> Map集合不能直接使用迭代器或者foreach进行遍历。但是转成Set之后就可以使用了。
 
 ## 1.7  HashMap存储自定义类型键值
 
