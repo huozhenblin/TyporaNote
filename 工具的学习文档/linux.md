@@ -764,13 +764,226 @@ n1 n2为行号
 
 1、 RPM（二进制已编译）包命名原则  
 
-![image-20200409084940825](C:\Users\Huo\AppData\Roaming\Typora\typora-user-images\image-20200409084940825.png)
+![image-20200409084940825](D:\my\study\TyporaNote\工具的学习文档\imgs\image-20200409084940825.png)
 
 2、 RPM包依赖性
 树形依赖： a》b》c
 环形依赖： a》b》c》a
 模块依赖： 模块依赖查询网站：
 www.rpmfind.ne  
+
+## RPM包管理-rpm命令管理  
+
+### 1、包全名与包名  
+
+包全名：操作的包是没有安装的软件包时，使用包全名。而且要注意路径
+包名：操作已经安装的软件包时，使用包名。是搜索/var/lib/rpm/中的数据库  
+
+### 2、 RPM安装
+
+rpm –ivh 包全名
+选项：
+-i（install） 安装
+-v（verbose） 显示详细信息
+-h（hash） 显示进度
+--nodeps 不检测依赖性  
+
+### 3、 RPM包升级  
+
+rpm -Uvh 包全名
+选项：
+-U（upgrade） 升级  
+
+### 4.卸载  
+
+rpm -e 包名
+选项：
+-e（erase） 卸载
+--nodeps 不检查依赖性  
+
+### 查询是否安装  
+
+[root@localhost ~]# rpm -q 包名  
+
+查询包是否安装  
+
+选项：
+-q 查询（query）  
+
+[root@localhost ~]# rpm –qa
+\#查询所有已经安装的RPM包
+选项：
+-a 所有（all）  
+
+### 查询软件包详细信息  
+
+[root@localhost ~]# rpm –qi 包名
+选项：
+-i 查询软件信息（information）
+-p 查询未安装包信息（package）  
+
+### 查询包中文件安装位置  
+
+[root@localhost ~]# rpm –ql 包名
+选项：
+
+| -l   | 列表（list）                |
+| ---- | --------------------------- |
+| -p   | 查询未安装包信息（package） |
+
+### 查询系统文件属于哪个RPM包  
+
+[root@localhost ~]# rpm –qf 系统文件名
+选项：
+-f 查询系统文件属于哪个软件包（file）  
+
+### 查询软件包的依赖性  
+
+[root@localhost ~]# rpm –qR 包名
+选项：
+-R 查询软件包的依赖性（requires）
+-p 查询未安装包信息（package）  
+
+### RPM包校验  
+
+[root@localhost ~]# rpm –V 已安装的包名
+选项：
+-V 校验指定RPM包中的文件（verify）  
+
+一旦设置文件被改动会显示
+
+SM5DLUGT c filename
+
+![image-20200418090144682](D:\my\study\TyporaNote\工具的学习文档\imgs\docker容器.md)
+
+![image-20200418090234556](D:\my\study\TyporaNote\工具的学习文档\imgs\image-20200418090234556.png)
+
+### RPM包中文件提取  
+
+[root@localhost ~]# rpm2cpio 包全名 | \
+cpio -idv .文件绝对路径
+rpm2cpio
+\#将rpm包转换为cpio格式的命令
+cpio
+\#是一个标准工具，它用于创建软件档案文件和从档案文件中提取文件  
+
+[root@localhost ~]# cpio 选项 < [文件|设备]
+选项：
+-i： copy-in模式，还原
+-d：还原时自动新建目录
+-v：显示还原过程  
+
+[root@localhost ~]# rpm -qf /bin/ls
+\#查询ls命令属于哪个软件包
+[root@localhost ~]# mv /bin/ls /tmp/
+\#造成ls命令误删除假象
+[root@localhost ~]# rpm2cpio /mnt/cdrom/Packages/coreutils-
+8.4-19.el6.i686.rpm | cpio -idv ./bin/ls
+\#提取RPM包中ls命令到当前目录的/bin/ls下
+[root@localhost ~]# cp /root/bin/ls /bin/
+\#把ls命令复制会/bin/目录，修复文件丢失  
+
+## RPM包管理-yum在线管理  
+
+### IP地址配置和网络yum源
+
+#### IP地址配置  
+
+[root@localhost ~]# setup  
+
+\#使用setup工具  
+
+[root@localhost ~]# vi /etc/sysconfig/network-scripts/ifcfg-eth0z
+把ONBOOT=“no” 改为
+ONBOOT=“yes“  
+
+\#启动网卡  
+
+[root@localhost ~]# service network restart  
+
+\#重启网络服务  
+
+### 网络yum源  
+
+[root@localhost yum.repos.d]# vi /etc/yum.repos.d/CentOS-Base.repo
+ [base] 容器名称，一定要放在[]中
+ name 容器说明，可以自己随便写
+ mirrorlist 镜像站点，这个可以注释掉
+ baseurl 我们的yum源服务器的地址。默认是CentOS官方的yum源服务
+器，是可以使用的，如果你觉得慢可以改成你喜欢的yum源地
+址
+
+|  enabled | 此容器是否生效，如果不写或写成enable=1都是生效，写成 enable=0就是不生效 |
+| --------- | ------------------------------------------------------------ |
+|           |                                                              |
+
+ gpgcheck 如果是1是指RPM的数字证书生效，如果是0则不生效
+ gpgkey 数字证书的公钥文件保存位置。不用修改
+
+### yum命令  
+
+#### 1）查询  
+
+[root@localhost yum.repos.d]# yum list
+\#查询所有可用软件包列表
+[root@localhost yum.repos.d]# yum search 关键字
+\#搜索服务器上所有和关键字相关的包  
+
+-info 查询本地已安装
+
+#### 2）安装  
+
+[root@localhost yum.repos.d]# yum –y install 包名
+选项：
+
+| install | 安装        |
+| ------- | ----------- |
+| -y      | 自动回答yes |
+
+
+
+#### 3）升级  
+
+[root@localhost yum.repos.d]# yum -y update 包名
+选项：
+
+| update | 升级        |
+| ------ | ----------- |
+| -y     | 自动回答yes |
+
+#### 4）卸载  
+
+[root@localhost yum.repos.d]# yum -y remove 包名  
+
+选项：
+
+| remove | 卸载        |
+| ------ | ----------- |
+| -y     | 自动回答yes |
+
+### 脚本安装包  
+
+脚本安装包并不是独立的软件包类型，常见
+安装的是源码包。
+是人为把安装过程写成了自动安装的脚本，
+只要执行脚本，定义简单的参数，就可以完
+成安装。
+非常类似于Windows下软件的安装方式。  
+
+#### Webmin的作用  
+
+Webmin 是一个基于 Web 的 Linux 系统管
+理界面。您就可以通过图形化的方式设置
+用户帐号、 Apache、 DNS、文件共享等服
+务。  
+
+### Webmin安装过程  
+
+下载软件
+ http://sourceforge.net/projects/webadmin/files/
+webmin/
+解压缩，并进入加压缩目录
+执行安装脚本  
 
 # 2.bash
 
@@ -1036,3 +1249,95 @@ grep "a*" test_rule.txt
 ## 3.5格式化打印printf 与 数据处理工具 awk
 
 printf不是管道命令
+
+# 4.linux账号管理和acl设置
+
+## 4.1账号与用户组
+
+### 4.4.1用户账号
+
+用户信息存储在 /etc/password目录下
+
+格式：root​：x:0:0:root:/root:/bin/bash
+
+共有七个字段
+
+| 账号名称       | 用来对应UID                                                  |
+| -------------- | ------------------------------------------------------------ |
+| 密码           | 这里是隐藏的 在/etc/shadow文件下，以x表示                    |
+| UID            | 用户标识符 0：表示系统管理员 1-499：系统账号 500-65535：可登录账号 |
+| GID            | 与/etc/group有关，规定组名和gid的对应                        |
+| 用户信息说明列 |                                                              |
+| 主文件夹       | 说明用户的主文件夹的位置                                     |
+| shell          | 说明默认是使用的shell命令的存放位置                          |
+
+密码存在/etc/shadow文件夹下
+
+格式：huodada:$6$gB.e95oe$./EDy76Oywaumttcu1MnsgwNbmFUSJum5hL.TBeFzsj5Lza.IGgr9C0B7vWG1tj5gKDtjI/zNZGmzpmvw4afG.:18361:0:99999:7:::
+
+类似组的信息
+
+用户组信息存储在 /etc/group目录下
+
+格式：huodada：:x:：1001:组员名（想加入组将用户名加入此字段即可）
+
+### 4.4.2小命令
+
+~~~shell
+#当前账号所属的用户组,第一个为当前有效组
+$ grounds  
+#切换有效用户组
+$ newgrp 组名
+
+~~~
+
+## 4,2账号管理
+
+### 4.2.1新增与删除用户
+
+#### useradd创建用户
+
+\#useradd [选项] 用户名
+
+默认创建用户时主文件夹默认权限700
+
+~~~shell
+useradd vbird1
+
+[root@192 ~]# ll -d /home/vbird1/
+drwx------. 2 vbird1 vbird1 62 4月  20 10:31 /home/vbird1/
+~~~
+
+
+
+选项  
+
+-u UID： 手工指定用户的UID号
+
+| -d 家目录：   | 手工指定用户的家目录 |
+| ------------- | -------------------- |
+| -c 用户说明： | 手工指定用户的说明   |
+
+-g 组名： 手工指定用户的初始组
+-G 组名： 指定用户的附加组
+-s shell： 手工指定用户的登录shell。默认是/bin/bash
+
+加密码
+
+#### passwd命令格式  
+
+\#passwd [选项] 用户名  
+
+选项：  
+
+​		
+
+用户自己改密码时切换到该用户 直接passwd
+
+#### 用户身份切换su
+
+su [-lm] [-c命令] [username]
+
+使用 su - 命令可以切换root身份 exit退出
+
+​	su -l  username 可以切换到指定用户

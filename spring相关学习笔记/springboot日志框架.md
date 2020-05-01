@@ -1,5 +1,7 @@
 # 日志
 
+http://logback.qos.ch/manual/index.html文档
+
 ## 1、日志框架
 
  小张；开发一个大型系统；
@@ -62,19 +64,58 @@ public class HelloWorld {
 }
 ```
 
-图示；
+或者使用lombok插件工具，以注解的方式监测类
 
-![images/concrete-bindings.png](D:/my/study/Typora书写的各种笔记/spring相关学习笔记/Spring Boot 笔记+课件/images/concrete-bindings.png)
+~~~java
+package com.huo;
+
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
+
+/**
+ * @Author: Huo
+ * @Description:
+ * @Date: Create in 21:02 2020/4/19
+ */
+@SpringBootTest
+@Slf4j
+public class LoggerTest {
+
+//        private  final Logger logger = LoggerFactory.getLogger(getClass());
+        @Test
+    public void test1(){
+            log.debug("debug...");
+            log.info("info...");
+            log.error("error...");
+        }
+
+}
+
+~~~
+
+### 2.变量的监测
+
+~~~java
+   //            字符创拼接的方法监测变量         
+			log.info("info..., "+name+" ,password:"+password);
+//            利用日志特殊表达式，自动装入占位符
+            log.info("info..."+"name: {},password: {}",name,password);
+~~~
+
+
+
+
 
 每一个日志的实现框架都有自己的配置文件。使用slf4j以后，**配置文件还是做成日志实现框架自己本身的配置文件；**
 
-### 2、遗留问题
+### 3、遗留问题
 
 a（slf4j+logback）: Spring（commons-logging）、Hibernate（jboss-logging）、MyBatis、xxxx
 
 统一日志记录，即使是别的框架和我一起统一使用slf4j进行输出？
-
-![](D:/my/study/Typora书写的各种笔记/spring相关学习笔记/Spring Boot 笔记+课件/images/legacy.png)
 
 **如何让系统中所有的日志都统一到slf4j；**
 
@@ -84,7 +125,17 @@ a（slf4j+logback）: Spring（commons-logging）、Hibernate（jboss-logging）
 
 ==3、我们导入slf4j其他的实现==
 
+### 4.日志级别
 
+~~~java
+   ERROR(40, "ERROR"),
+    WARN(30, "WARN"),
+    INFO(20, "INFO"),
+    DEBUG(10, "DEBUG"),
+    TRACE(0, "TRACE");
+~~~
+
+如果日志记录请求的级别高于或等于其日志记录器的有效级别，则称为启用日志记录请求。否则，请求将被禁用。
 
 ## 3、SpringBoot日志关系
 
@@ -105,10 +156,6 @@ SpringBoot使用它来做日志功能；
 			<artifactId>spring-boot-starter-logging</artifactId>
 		</dependency>
 ```
-
-底层依赖关系
-
-![](D:/my/study/Typora书写的各种笔记/spring相关学习笔记/Spring Boot 笔记+课件/images/搜狗截图20180131220946.png)
 
 总结：
 
@@ -150,9 +197,15 @@ public abstract class LogFactory {
 
 **==SpringBoot能自动适配所有的日志，而且底层使用slf4j+logback的方式记录日志，引入其他框架的时候，只需要把这个框架依赖的日志框架排除掉即可；==**
 
-## 4、日志使用；
+## 4、日志使用
 
-### 1、默认配置
+两种配置方式
+
+第一种是 application.yml
+
+第二种是 logback-spring.xml
+
+### 1、默认配置（yml）
 
 SpringBoot默认帮我们配置好了日志；
 
@@ -177,7 +230,7 @@ SpringBoot默认帮我们配置好了日志；
 	}
 ```
 
-
+#### 设置控制台输出格式
 
         日志输出格式：
     		%d表示日期时间，
@@ -187,6 +240,9 @@ SpringBoot默认帮我们配置好了日志；
     		%msg：日志消息，
     		%n是换行符
         -->
+        logging:
+      		pattern:
+        		console: "%d - %msg%n"
         %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
 
 SpringBoot修改日志的默认配置
@@ -202,8 +258,17 @@ logging.path=/spring/log
 # 也可以指定完整的路径；
 #logging.file=G:/springboot.log
 
+#更改日志等级 springboot1.5
+logging:
+  pattern:
+    console: "%d - %msg%n"
+  file: /log/log.log
 
-
+  level: debug
+#指定某个类的日志等级
+  level:
+    com.huo.LoggerTest: debug
+#spring2,0的logger配置是不同的
 #  在控制台输出的日志的格式
 logging.pattern.console=%d{yyyy-MM-dd} [%thread] %-5level %logger{50} - %msg%n
 # 指定文件中日志输出的格式
@@ -323,4 +388,60 @@ slf4j+log4j的方式；
 
 -----------------
 
-# 
+## 6.使用xml配置日志通用
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+<!--    输出info日志-->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤掉不是info等级的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>
+                %msg%n
+            </pattern>
+        </encoder>
+<!--        滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+<!--    路径-->
+            <fileNamePattern>/var/log/tomcat/sell/info.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+<!--    只输出错误信息-->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+<!--        添加过滤器-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>
+                %msg%n
+            </pattern>
+        </encoder>
+        <!--        滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--    路径-->
+            <fileNamePattern>/var/log/tomcat/sell/error.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <root level="info">
+        <appender-ref ref="consoleLog" />
+        <appender-ref ref="fileInfoLog" />
+        <appender-ref ref="fileErrorLog" />
+    </root>
+</configuration>
+~~~
+
